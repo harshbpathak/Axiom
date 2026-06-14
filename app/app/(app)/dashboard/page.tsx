@@ -63,7 +63,7 @@ export default function Page() {
           cash_reserve: currentInputs.cashReserve,
           monthly_burn: currentInputs.monthlyBurn,
           monthly_revenue: currentInputs.monthlyRevenue,
-          goal_prompt: currentInputs.strategicGoal,
+          goal_prompt: currentInputs.strategicGoal || "Extend runway",
         }),
       });
 
