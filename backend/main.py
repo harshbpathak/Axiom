@@ -1,14 +1,29 @@
 import logging
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.routes.strategy import router as strategy_router
 from core.config import settings
+from computation.engine import get_backend
 
 logging.basicConfig(level=logging.INFO)
 
-app = FastAPI(title="Axiom API", version="1.0.0")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize computation backend on startup
+    backend = get_backend()
+    logger = logging.getLogger(__name__)
+    if await backend.is_alive():
+        logger.info(f"Initialized Wolfram backend in mode: {settings.wolfram_mode}")
+    else:
+        logger.warning("Wolfram backend initialization failed or is degraded")
+    yield
+    # Cleanup on shutdown if needed
+    pass
+
+app = FastAPI(title="Axiom API", version="1.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

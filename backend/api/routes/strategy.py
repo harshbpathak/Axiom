@@ -14,6 +14,7 @@ async def health_check() -> HealthResponse:
     return HealthResponse(
         status="ok",
         wolfram_available=is_wolfram_available(),
+        wolfram_mode=settings.wolfram_mode,
         gemini_configured=bool(settings.gemini_api_key),
     )
 
@@ -45,7 +46,8 @@ class _StreamEvent:
 async def compute_strategy_stream(data: StrategyInput):
     async def event_generator():
         try:
-            result = await agent_graph.ainvoke(
+            # We can stream intermediate steps using astream instead of ainvoke
+            async for event in agent_graph.astream(
                 {
                     "input": data,
                     "agent_feed": [],
@@ -53,22 +55,25 @@ async def compute_strategy_stream(data: StrategyInput):
                     "quant_result": None,
                     "final_response": None,
                     "error": None,
-                }
-            )
-
-            for step in result.get("agent_feed", []):
-                yield _StreamEvent.step(step)
-
-            if result.get("error"):
-                yield _StreamEvent.error(result["error"])
-                return
-
-            final = result.get("final_response")
-            if final is None:
-                yield _StreamEvent.error("Pipeline failed to produce a response")
-                return
-
-            yield _StreamEvent.complete(final)
+                    "trace": {},
+                    "quant_retries": 0,
+                },
+                stream_mode="values"
+            ):
+                # The state contains the accumulated feed. Let's yield the last message
+                if event.get("agent_feed"):
+                    yield _StreamEvent.step(event["agent_feed"][-1])
+                
+                # Check if final response is ready
+                if event.get("final_response"):
+                    yield _StreamEvent.complete(event["final_response"])
+                    return
+                
+                # Check if critical error
+                if event.get("error") and event.get("quant_retries", 0) >= 2:
+                    yield _StreamEvent.error(event["error"])
+                    return
+            
         except Exception as exc:
             yield _StreamEvent.error(str(exc))
 
