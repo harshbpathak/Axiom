@@ -7,10 +7,8 @@ export interface StrategyInput {
 
 export interface ChartCoordinate {
   month: number;
-  balance: number;
-  type: "historical" | "projected";
-  confidenceLow?: number;
-  confidenceHigh?: number;
+  historical: number | null;
+  projected: number | null;
 }
 
 export interface SensitivityPoint {

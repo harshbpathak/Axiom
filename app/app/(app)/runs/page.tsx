@@ -187,7 +187,7 @@ function ComparisonPanel({
     const row: Record<string, number> = { month: m };
     runs.forEach((r) => {
       const c = r.output.chartCoordinates.find((x) => x.month === m);
-      if (c) row[r.label] = c.balance;
+      if (c) row[r.label] = c.projected ?? c.historical ?? 0;
     });
     return row;
   });
@@ -263,4 +263,3 @@ function ComparisonRow({
     </tr>
   );
 }
-

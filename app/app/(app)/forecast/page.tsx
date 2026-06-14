@@ -95,9 +95,10 @@ export default function Page() {
               <YAxis tick={{ fill: "#64748b", fontSize: 11, fontFamily: "IBM Plex Mono" }} tickFormatter={(v) => fmtCurrency(v, { compact: true })} axisLine={{ stroke: "#334155" }} />
               <Tooltip content={<DarkTooltip />} />
               {showBand && (
-                <Area type="monotone" dataKey="confidenceHigh" stroke="none" fill="#0d9488" fillOpacity={0.1} name="Confidence" />
+                <Area type="monotone" dataKey="projected" stroke="none" fill="#0d9488" fillOpacity={0.1} name="Projected Area" />
               )}
-              <Line type="monotone" dataKey="balance" name="Balance" stroke="#0d9488" strokeWidth={2.5} dot={{ r: 4, fill: "#0d9488" }} isAnimationActive animationDuration={1000} />
+              <Line type="monotone" dataKey="historical" name="Historical Balance" stroke="#64748b" strokeWidth={2.5} dot={{ r: 4, fill: "#64748b" }} isAnimationActive animationDuration={1000} />
+              <Line type="monotone" dataKey="projected" name="Projected Balance" stroke="#0d9488" strokeWidth={2.5} strokeDasharray="4 4" dot={{ r: 4, fill: "#0d9488" }} isAnimationActive animationDuration={1000} />
               {showZero && (
                 <ReferenceLine y={0} stroke="#dc2626" strokeDasharray="4 4" label={{ value: "Cash Zero", fill: "#dc2626", fontSize: 10, position: "right" }} />
               )}
@@ -139,22 +140,23 @@ export default function Page() {
             </thead>
             <tbody className="font-mono">
               {data.map((c, i) => {
-                const pct = c.balance / initialBalance;
+                const bal = c.projected ?? c.historical ?? 0;
+                const pct = bal / initialBalance;
                 const cls =
-                  c.balance < 0
+                  bal < 0
                     ? "bg-red-900/20 text-red-400 font-semibold"
                     : pct < 0.2
                     ? "text-red-400 font-semibold"
                     : pct < 0.5
                     ? "text-amber-400"
                     : "text-[var(--text-primary)]";
-                const prior = i > 0 ? data[i - 1].balance : c.balance;
-                const delta = c.balance - prior;
-                const status = c.balance < 0 ? "INSOLVENT" : pct < 0.2 ? "CRITICAL" : pct < 0.5 ? "WATCH" : "HEALTHY";
+                const priorBal = i > 0 ? (data[i - 1].projected ?? data[i - 1].historical ?? 0) : bal;
+                const delta = bal - priorBal;
+                const status = bal < 0 ? "INSOLVENT" : pct < 0.2 ? "CRITICAL" : pct < 0.5 ? "WATCH" : "HEALTHY";
                 return (
                   <tr key={c.month} className={`border-t border-[var(--border)] ${cls}`}>
                     <td className="px-5 py-2.5">M{c.month >= 0 ? "+" : ""}{c.month}</td>
-                    <td className="px-5 py-2.5 text-right">{fmtCurrency(c.balance)}</td>
+                    <td className="px-5 py-2.5 text-right">{fmtCurrency(bal)}</td>
                     <td className="px-5 py-2.5 text-right">{i === 0 ? "—" : `${delta >= 0 ? "+" : ""}${fmtCurrency(delta, { compact: true })}`}</td>
                     <td className="px-5 py-2.5 text-right text-[10px] uppercase tracking-widest">{status}</td>
                   </tr>
@@ -182,4 +184,3 @@ function Toggle({ label, value, onChange }: { label: string; value: boolean; onC
     </label>
   );
 }
-

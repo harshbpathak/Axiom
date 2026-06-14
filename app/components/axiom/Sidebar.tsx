@@ -7,6 +7,7 @@ import {
   SlidersHorizontal,
   History,
   Terminal,
+  FileSpreadsheet,
   type LucideIcon,
 } from "lucide-react";
 import { useAxiomStore } from "@/lib/axiom/store";
@@ -17,6 +18,7 @@ const NAV: { icon: LucideIcon; label: string; to: string }[] = [
   { icon: SlidersHorizontal, label: "Pricing Lab", to: "/pricing" },
   { icon: History, label: "Past Runs", to: "/runs" },
   { icon: Terminal, label: "Agent Console", to: "/agents" },
+  { icon: FileSpreadsheet, label: "Batch Analysis", to: "/batch" },
 ];
 
 export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {

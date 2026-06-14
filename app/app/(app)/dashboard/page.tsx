@@ -55,7 +55,7 @@ export default function Page() {
 
     setIsComputing(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
       const res = await fetch(`${apiUrl}/api/v1/strategy/compute`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -281,8 +281,9 @@ function ResultsArea({ run }: { run: ReturnType<typeof useActiveRun> & {} }) {
               <XAxis dataKey="month" tick={{ fill: "#64748b", fontSize: 11, fontFamily: "IBM Plex Mono" }} axisLine={{ stroke: "#334155" }} />
               <YAxis tick={{ fill: "#64748b", fontSize: 11, fontFamily: "IBM Plex Mono" }} tickFormatter={(v) => fmtCurrency(v, { compact: true })} axisLine={{ stroke: "#334155" }} />
               <Tooltip content={<DarkTooltip />} />
-              <Area type="monotone" dataKey="confidenceHigh" stroke="none" fill="#0d9488" fillOpacity={0.12} name="Confidence High" />
-              <Line type="monotone" dataKey="balance" name="Balance" stroke="#0d9488" strokeWidth={2} dot={{ r: 3, fill: "#0d9488" }} isAnimationActive animationDuration={800} />
+              <Area type="monotone" dataKey="projected" stroke="none" fill="#0d9488" fillOpacity={0.12} name="Projected Area" />
+              <Line type="monotone" dataKey="historical" name="Historical Balance" stroke="#64748b" strokeWidth={2} dot={{ r: 3, fill: "#64748b" }} isAnimationActive animationDuration={800} />
+              <Line type="monotone" dataKey="projected" name="Projected Balance" stroke="#0d9488" strokeWidth={2} strokeDasharray="4 4" dot={{ r: 3, fill: "#0d9488" }} isAnimationActive animationDuration={800} />
               <ReferenceLine y={0} stroke="#dc2626" strokeDasharray="4 4" label={{ value: "Cash Zero", fill: "#dc2626", fontSize: 10, position: "right" }} />
               <ReferenceLine x={0} stroke="#64748b" strokeDasharray="2 2" label={{ value: "Today", fill: "#94a3b8", fontSize: 10, position: "top" }} />
             </ComposedChart>

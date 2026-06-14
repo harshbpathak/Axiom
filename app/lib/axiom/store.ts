@@ -19,8 +19,23 @@ export const useAxiomStore = create<AppStore>((set) => ({
   activeRunId: "run_001",
   wolframMode: "local_kernel",
   isComputing: false,
-  addRun: (run) =>
-    set((s) => ({ runs: [run, ...s.runs], activeRunId: run.id })),
+  addRun: (run) => {
+    set((s) => ({ runs: [run, ...s.runs], activeRunId: run.id }));
+    import("../supabaseClient").then(({ supabase }) => {
+      supabase.from("strategy_runs").insert({
+        cash_reserve: run.inputs.cashReserve,
+        monthly_burn: run.inputs.monthlyBurn,
+        monthly_revenue: run.inputs.monthlyRevenue,
+        strategic_goal: run.inputs.strategicGoal,
+        verified_runway_months: run.output.verifiedRunwayMonths,
+        optimal_price_point: run.output.optimalPricePoint,
+        executive_summary: run.output.executiveSummary,
+        wolfram_mode: run.output.wolframMode,
+      }).then(({ error }) => {
+        if (error) console.error("Error saving run to Supabase:", error);
+      });
+    });
+  },
   selectRun: (id) => set({ activeRunId: id }),
   clearRuns: () => set({ runs: [], activeRunId: null }),
   setWolframMode: (m) => set({ wolframMode: m }),

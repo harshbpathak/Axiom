@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.routes.strategy import router as strategy_router
+from api.routes import batch
 from core.config import settings
 from computation.engine import get_backend
 
@@ -23,8 +24,14 @@ async def lifespan(app: FastAPI):
     # Cleanup on shutdown if needed
     pass
 
-app = FastAPI(title="Axiom API", version="1.0.0", lifespan=lifespan)
+app = FastAPI(
+    title="Axiom Backend",
+    description="Backend services for Axiom Strategy Engine.",
+    version="1.0.0",
+    lifespan=lifespan
+)
 
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origin_list,
@@ -34,6 +41,7 @@ app.add_middleware(
 )
 
 app.include_router(strategy_router, prefix="/api/v1")
+app.include_router(batch.router, prefix="/api/v1")
 
 
 @app.get("/")
