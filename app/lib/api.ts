@@ -1,6 +1,12 @@
-import type { ComputationResponse, StrategyInput } from "./types";
+import type { ComputationResponse, StrategyInput, HealthResponse } from "./types";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
+export async function fetchHealth(): Promise<HealthResponse> {
+  const response = await fetch(`${API_BASE}/api/v1/health`);
+  if (!response.ok) throw new Error("Health check failed");
+  return response.json();
+}
 
 export async function computeStrategy(
   input: StrategyInput
@@ -43,11 +49,11 @@ export async function computeStrategyStream(
     if (done) break;
 
     buffer += decoder.decode(value, { stream: true });
-    const chunks = buffer.split("\n\n");
+    const chunks = buffer.split(/\r?\n\r?\n/);
     buffer = chunks.pop() ?? "";
 
     for (const chunk of chunks) {
-      const lines = chunk.split("\n");
+      const lines = chunk.split(/\r?\n/);
       let event = "message";
       let data = "";
 
