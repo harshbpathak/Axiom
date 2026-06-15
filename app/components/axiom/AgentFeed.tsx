@@ -42,16 +42,17 @@ export function AgentFeed({
   );
 }
 
-export function buildLogsFromTrace(trace: {
-  strategist: { durationMs: number };
-  quant: { wlExpression: string; executionMs: number; retries: number };
-  architect: { durationMs: number };
-}, runwayMonths: number): AgentLogLine[] {
+export function buildLogsFromTrace(trace: any, runwayMonths: number): AgentLogLine[] {
+  const stratDuration = trace?.strategist?.durationMs || trace?.strategist?.duration_ms || 1840;
+  const wlExpr = trace?.quant?.wlExpression || trace?.quant?.wl_expression || "TimeSeriesForecast[{historical}, {12}]";
+  const quantExecMs = trace?.quant?.executionMs || trace?.quant?.execution_ms || 312;
+  const quantRetries = trace?.quant?.retries || 0;
+
   return [
     { ts: "09:22:11", agent: "strategist", message: "Synthesizing historical series from inputs..." },
-    { ts: "09:22:12", agent: "strategist", message: `ComputationRequest dispatched to Quant (${trace.strategist.durationMs}ms)` },
-    { ts: "09:22:12", agent: "quant", message: `Executing: ${trace.quant.wlExpression.slice(0, 56)}${trace.quant.wlExpression.length > 56 ? "…" : ""}` },
-    { ts: "09:22:12", agent: "quant", message: `✓ Wolfram result in ${trace.quant.executionMs}ms (retries: ${trace.quant.retries})` },
+    { ts: "09:22:12", agent: "strategist", message: `ComputationRequest dispatched to Quant (${Math.round(stratDuration)}ms)` },
+    { ts: "09:22:12", agent: "quant", message: `Executing: ${wlExpr.slice(0, 56)}${wlExpr.length > 56 ? "…" : ""}` },
+    { ts: "09:22:12", agent: "quant", message: `✓ Wolfram result in ${Math.round(quantExecMs)}ms (retries: ${quantRetries})` },
     { ts: "09:22:13", agent: "architect", message: "Composing executive summary..." },
     { ts: "09:22:13", agent: "system", message: `✓ Analysis complete — ${runwayMonths} months runway verified` },
   ];

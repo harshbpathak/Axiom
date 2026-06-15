@@ -28,6 +28,7 @@ export default function Page() {
   const selectRun = useAxiomStore((s) => s.selectRun);
   const runs = useAxiomStore((s) => s.runs);
   const addRun = useAxiomStore((s) => s.addRun);
+  const setWolframMode = useAxiomStore((s) => s.setWolframMode);
 
   const [inputs, setInputs] = useState<StrategyInput>({
     cashReserve: 850000,
@@ -70,7 +71,18 @@ export default function Page() {
         throw new Error(`API error: ${res.status}`);
       }
 
-      const output = await res.json();
+      const rawOutput = await res.json();
+      
+      const output = {
+        verifiedRunwayMonths: rawOutput.verified_runway_months,
+        optimalPricePoint: rawOutput.optimal_price_point,
+        chartCoordinates: rawOutput.chart_coordinates,
+        executiveSummary: rawOutput.executive_summary,
+        sensitivityGrid: rawOutput.sensitivity_grid,
+        actionInsights: rawOutput.action_insights,
+        trace: rawOutput.trace,
+        wolframMode: rawOutput.trace?.quant?.wolfram_mode || "local_kernel"
+      };
       
       const newRun: any = {
         id: "run_" + Date.now(),
@@ -82,6 +94,7 @@ export default function Page() {
       };
 
       addRun(newRun);
+      setWolframMode(output.wolframMode as any);
     } catch (err) {
       console.error("Failed to run analysis:", err);
       alert("Backend computation failed. Please ensure the python backend is running on port 8000.");
