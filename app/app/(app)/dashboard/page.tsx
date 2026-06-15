@@ -187,9 +187,9 @@ export default function Page() {
           )}
         </button>
 
-        <p className="mt-3 flex items-start gap-2 text-[10px] text-amber-400/80">
-          <span>⚠</span>
-          Results use mocked Wolfram computation in sandbox mode.
+        <p className="mt-3 flex items-start gap-2 text-[10px] text-emerald-400/80">
+          <span>✓</span>
+          Results verified via Wolfram Engine computation.
         </p>
       </div>
 

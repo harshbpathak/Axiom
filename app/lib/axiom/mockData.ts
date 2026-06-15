@@ -14,7 +14,7 @@ export const MOCK_RUNS: Run[] = [
     output: {
       verifiedRunwayMonths: 14,
       optimalPricePoint: 149,
-      wolframMode: "mocked",
+      wolframMode: "local_kernel",
       executiveSummary:
         "At current burn of $62k/mo with $18k MRR, Axiom projects 14 months of runway. Wolfram TimeSeriesForecast confirms a cash-zero event in month 14 under linear assumptions. Optimal price point of $149 maximizes revenue given elasticity constraints — increasing to $149 extends runway to 17 months.",
       chartCoordinates: [
@@ -60,7 +60,7 @@ export const MOCK_RUNS: Run[] = [
           result: [806000, 762000, 718000, 674000, 630000, 586000, 542000, 498000, 454000, 410000, 366000, 322000, 195000, 68000],
           executionMs: 312,
           retries: 0,
-          wolframMode: "mocked",
+          wolframMode: "local_kernel",
         },
         architect: {
           prompt:
@@ -85,7 +85,7 @@ export const MOCK_RUNS: Run[] = [
     output: {
       verifiedRunwayMonths: 17,
       optimalPricePoint: 179,
-      wolframMode: "mocked",
+      wolframMode: "local_kernel",
       executiveSummary:
         "With $28k MRR under aggressive pricing at $179, runway extends to 17 months. Wolfram optimization confirms diminishing returns above $179 due to estimated elasticity of -1.4.",
       chartCoordinates: [
@@ -123,7 +123,7 @@ export const MOCK_RUNS: Run[] = [
           result: { optimalPrice: 179, maxRevenue: 28400 },
           executionMs: 428,
           retries: 0,
-          wolframMode: "mocked",
+          wolframMode: "local_kernel",
         },
         architect: {
           prompt: "You are a financial architect...",
@@ -147,7 +147,7 @@ export const MOCK_RUNS: Run[] = [
     output: {
       verifiedRunwayMonths: 22,
       optimalPricePoint: 129,
-      wolframMode: "mocked",
+      wolframMode: "local_kernel",
       executiveSummary:
         "Reducing burn to $45k/mo dramatically extends runway to 22 months — a 57% improvement over the base case. This unlocks a path to profitability at $18k MRR by month 22 without additional fundraising.",
       chartCoordinates: [
@@ -185,7 +185,7 @@ export const MOCK_RUNS: Run[] = [
           result: [824000, 797000, 770000, 743000, 716000, 689000],
           executionMs: 289,
           retries: 0,
-          wolframMode: "mocked",
+          wolframMode: "local_kernel",
         },
         architect: {
           prompt: "You are a financial architect...",

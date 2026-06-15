@@ -384,7 +384,7 @@ function Features() {
     { icon: FlaskConical, title: "Sensitivity Lab", body: "Drag a slider across a precomputed ±20% price grid. See runway change in real-time without a new API call." },
     { icon: Terminal, title: "Agent Console", body: "Full reasoning transparency. See every prompt, every Wolfram expression, every retry — not a black box." },
     { icon: GitCompare, title: "Scenario Comparison", body: "Run multiple scenarios and overlay them on a single chart. Diff your assumptions in a table." },
-    { icon: ShieldCheck, title: "Verified, Not Estimated", body: "Every number carries a wolfram_mode tag. You always know if a result is kernel-verified or mocked." },
+    { icon: ShieldCheck, title: "Verified, Not Estimated", body: "Every number carries a wolfram_mode tag. You always know if a result is kernel-verified or running in fallback mode." },
   ];
   return (
     <section id="features" className="border-t border-[var(--border)] px-4 py-24 sm:px-6">
@@ -547,7 +547,7 @@ function Trust() {
             </p>
             <p className="mt-4 text-base leading-relaxed text-[var(--text-secondary)]">
               When Axiom returns a number, it carries a <span className="font-mono text-[var(--accent)]">wolfram_mode</span> tag.
-              You always know whether the result is kernel-verified or sandbox-mocked. No silent hallucination.
+              You always know whether the result is kernel-verified or running in fallback mode. No silent hallucination.
             </p>
           </div>
           <div className="relative rounded-xl border border-[var(--border)] bg-[var(--code-bg)] p-6 font-mono text-xs leading-relaxed text-[var(--text-secondary)]">

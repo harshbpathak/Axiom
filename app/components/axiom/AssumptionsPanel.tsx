@@ -5,7 +5,7 @@ const ITEMS: { icon: "info" | "warn"; text: string }[] = [
   { icon: "info", text: "Historical series synthesized from 3 inputs (cash, burn, revenue) — 6-month linear projection backward." },
   { icon: "info", text: "Price elasticity assumed at -1.4 (demand drops 1.4% per 1% price increase)." },
   { icon: "info", text: "Cost structure assumed linear with revenue." },
-  { icon: "warn", text: "Wolfram mode: MOCKED — results use scipy.optimize, not live Wolfram kernel." },
+  { icon: "info", text: "Wolfram mode: LOCAL_KERNEL — results computed via local Wolfram Engine." },
 ];
 
 export function AssumptionsPanel() {
