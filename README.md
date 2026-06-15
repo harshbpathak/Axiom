@@ -1,62 +1,59 @@
-# Axiom
+# Axiom (The Computational Co-Founder)
 
-**Axiom (The Computational Co-Founder)** is an agentic AI workspace that combines Gemini reasoning with Wolfram-verified math for financial runway optimization.
+## Project Overview
+Axiom is an agentic AI workspace that combines Gemini reasoning with Wolfram-verified math for financial runway optimization. It acts as a computational co-founder, providing actionable financial insights for startups by projecting runway and determining optimal pricing strategies.
 
-## Project Structure
+## Problem Statement
+Startups and founders often rely on "guesstimates" or LLM hallucinations when projecting financial runway and pricing. Traditional LLMs are notoriously bad at precise mathematics. Axiom solves this by routing complex financial computations directly to a local Wolfram Engine, ensuring mathematical perfection while still leveraging the conversational and strategic power of Gemini AI.
 
-```
-Axiom/
-├── app/          # Next.js frontend (Mission Control UI)
-├── backend/      # FastAPI + LangGraph agent pipeline
-└── docs/         # Specifications and execution plan
-```
+## Features
+- **Financial Metrics Input**: Easy-to-use form for tracking Cash Reserve, Monthly Burn, Monthly Revenue, and Strategic Goals.
+- **Agent Swarm Terminal**: Live feed showing the internal thought process of the AI agents working on your data.
+- **Verified Runway Forecast**: A beautiful interactive chart showing cash balance trajectory powered by Wolfram `TimeSeriesForecast`.
+- **Actionable Insights**: Executive summary and mathematically verified cards indicating optimal price points, projected runway, and revenue gap.
+- **Hybrid AI Architecture**: Seamless handoffs between Gemini (Strategy & Synthesis) and Wolfram Engine (Quantitative Analysis).
 
-## Quick Start
+## Tech Stack
+- **Frontend**: Next.js 16 (App Router), React, Tailwind CSS, Framer Motion, Recharts
+- **Backend**: Python, FastAPI, Uvicorn
+- **AI / LLM Framework**: LangGraph, Google Gemini (1.5 Pro & Flash)
+- **Computation**: Wolfram Engine (Local Kernel)
+- **Deployment**: AWS EC2 (Ubuntu), PM2, Nginx
 
-### 1. Backend
+## Setup Instructions
 
+### 1. Backend Setup
 ```bash
 cd backend
-cp .env.example .env
-# Add your GEMINI_API_KEY to .env
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 
-python -m pip install -r requirements.txt
-python -m uvicorn main:app --reload --port 8000
+# Environment Variables
+echo "GEMINI_API_KEY=your_key_here" > .env
+echo "WOLFRAM_MODE=local_kernel" >> .env
+
+# Run the server
+uvicorn main:app --reload --port 8000
 ```
+*API docs available at: http://localhost:8000/docs*
 
-API docs: http://localhost:8000/docs
-
-### 2. Frontend
-
+### 2. Frontend Setup
 ```bash
 cd app
-cp .env.example .env.local
 
+# Environment Variables
+echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > .env.local
+
+# Run the UI
 pnpm install
 pnpm dev
 ```
+*Open http://localhost:3000 to view the application.*
 
-Open http://localhost:3000
+## Team Details
+- Harsh Pathak
 
-## Environment Variables
-
-| Variable | Location | Description |
-|----------|----------|-------------|
-| `GEMINI_API_KEY` | `backend/.env` | Google Gemini API key (Strategist + Architect agents) |
-| `WOLFRAM_LICENSE_PATH` | `backend/.env` | Optional Wolfram Engine license path |
-| `NEXT_PUBLIC_API_URL` | `app/.env.local` | Backend URL (default: `http://localhost:8000`) |
-
-## Architecture
-
-1. **Strategist** (Gemini 1.5 Pro) — extracts variables from user metrics and goal
-2. **Quant** (Wolfram Engine) — runs `TimeSeriesForecast` and pricing optimization
-3. **Architect** (Gemini 1.5 Flash) — synthesizes verified results into executive summary
-
-If Wolfram is unavailable, the Quant agent falls back to deterministic Python math.
-
-## MVP Features
-
-- Financial metrics input form (cash, burn, revenue, goal)
-- Live agent swarm terminal feed during computation
-- Runway projection chart (historical + Wolfram forecast)
-- 3 actionable insight cards with verified numbers
+## Demo Link
+Live Deployment: [http://ec2-13-51-241-71.eu-north-1.compute.amazonaws.com](http://ec2-13-51-241-71.eu-north-1.compute.amazonaws.com)
+*(Running on AWS EC2)*
