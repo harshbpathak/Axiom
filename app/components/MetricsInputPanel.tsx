@@ -85,7 +85,7 @@ export default function MetricsInputPanel({
                 value={values[key] || ""}
                 placeholder={placeholder}
                 onChange={(e) =>
-                  updateField(key, key === "goal_prompt" ? e.target.value : Number(e.target.value))
+                  updateField(key, Number(e.target.value) as any)
                 }
                 className="w-full rounded-lg border border-slate-700 bg-slate-800/80 py-2.5 pl-7 pr-3 text-sm text-white outline-none transition focus:border-teal-500 focus:ring-1 focus:ring-teal-500 disabled:opacity-60"
               />

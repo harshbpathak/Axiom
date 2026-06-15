@@ -171,7 +171,7 @@ export default function Page() {
         </div>
 
         <button
-          onClick={handleRun}
+          onClick={() => handleRun()}
           disabled={isComputing}
           className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent)] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--accent-dim)] disabled:opacity-60"
         >
