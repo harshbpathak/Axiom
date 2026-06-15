@@ -50,12 +50,12 @@ class ComputationRequest(BaseModel):
     monthly_burn: float
     monthly_revenue: float
     net_monthly_flow: float
-    growth_rate_assumption: float
-    churn_rate_assumption: float
-    optimization_target: str
-    historical_balances: list[float]
+    growth_rate_assumption: float = 0.05
+    churn_rate_assumption: float = 0.03
+    optimization_target: str = "maximize_runway"
+    historical_balances: list[float] | None = None
     price_variable_bounds: tuple[float, float] | None = None
-    goal_interpretation: str
+    goal_interpretation: str = ""
 
 
 class QuantResult(BaseModel):

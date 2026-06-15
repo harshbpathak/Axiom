@@ -16,7 +16,7 @@ Startups and founders often rely on "guesstimates" or LLM hallucinations when pr
 ## Tech Stack
 - **Frontend**: Next.js 16 (App Router), React, Tailwind CSS, Framer Motion, Recharts
 - **Backend**: Python, FastAPI, Uvicorn
-- **AI / LLM Framework**: LangGraph, Google Gemini (1.5 Pro & Flash)
+- **AI / LLM Framework**: LangGraph, Google Gemini (2.5 Pro & Flash)
 - **Computation**: Wolfram Engine (Local Kernel)
 - **Deployment**: AWS EC2 (Ubuntu), PM2, Nginx
 

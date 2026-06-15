@@ -71,7 +71,7 @@ export default function Page() {
         <div className="p-5">
           {tab === "strategist" && (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <CodeBlock title="Prompt → Gemini 1.5 Pro" body={trace.strategist.prompt} />
+              <CodeBlock title="Prompt → Gemini 2.5 Pro" body={trace.strategist.prompt} />
               <CodeBlock title="Structured ComputationRequest" body={JSON.stringify(trace.strategist.request, null, 2)} highlight />
               <div className="md:col-span-2">
                 <DurationBadge ms={trace.strategist.durationMs} />

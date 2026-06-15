@@ -309,7 +309,7 @@ function Problem() {
 /* ---------- HOW IT WORKS ---------- */
 function HowItWorks() {
   const agents = [
-    { name: "Strategist", model: "Gemini 1.5 Pro", desc: "Interprets goals, structures the computation query.", color: "text-[var(--accent)]" },
+    { name: "Strategist", model: "Gemini 2.5 Pro", desc: "Interprets goals, structures the computation query.", color: "text-[var(--accent)]" },
     { name: "Quant", model: "Wolfram Engine", desc: "Computes mathematically exact results.", color: "text-purple-400" },
     { name: "Architect", model: "Gemini Flash", desc: "Synthesizes plain-language executive summary.", color: "text-amber-400" },
   ];
@@ -625,14 +625,14 @@ function Footer() {
             Stack
           </div>
           <ul className="mt-3 space-y-2 font-mono text-xs text-[var(--text-secondary)]">
-            <li>Gemini 1.5 Pro / Flash</li>
+            <li>Gemini 2.5 Pro / Flash</li>
             <li>Wolfram Engine</li>
             <li>LangGraph</li>
           </ul>
         </div>
       </div>
       <div className="mx-auto mt-10 max-w-6xl border-t border-[var(--border)] pt-6 text-center font-mono text-[10px] uppercase tracking-widest text-[var(--secondary)]">
-        © 2025 Axiom · Built with Gemini 1.5 · Wolfram Engine · LangGraph
+        © 2025 Axiom · Built with Gemini 2.5 · Wolfram Engine · LangGraph
       </div>
     </footer>
   );
