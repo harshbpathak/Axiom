@@ -64,7 +64,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
               mode === "mocked" ? "bg-amber-400" : "bg-[var(--accent)]"
             }`}
           />
-          ENGINE: {mode === "mocked" ? "MOCKED" : mode === "local_kernel" ? "LOCAL" : "WLSCRIPT"}
+          ENGINE: {mode === "local_kernel" ? "LOCAL" : mode === "wolframscript" ? "WLSCRIPT" : "STANDBY"}
         </div>
       </div>
     </aside>

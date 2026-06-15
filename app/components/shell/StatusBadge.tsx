@@ -32,7 +32,7 @@ export default function StatusBadge() {
     <div className="flex items-center gap-2">
       {health.wolfram_mode === "mocked" && (
         <span className="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-          Mocked
+          Standby
         </span>
       )}
       <div className="flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--panel)] px-2.5 py-1">

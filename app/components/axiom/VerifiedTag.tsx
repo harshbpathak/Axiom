@@ -12,7 +12,7 @@ export function VerifiedTag({ mode, label }: { mode: Mode; label?: string }) {
   };
   const labels: Record<Mode, string> = {
     verified: "Wolfram-Verified",
-    mocked: "Mocked",
+    mocked: "Fallback",
     degraded: "Degraded",
   };
   const Icon = mode === "verified" ? ShieldCheck : mode === "mocked" ? AlertTriangle : X;

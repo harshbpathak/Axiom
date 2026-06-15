@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { Run, WolframMode } from "./types";
+import { MOCK_RUNS } from "./mockData";
 
 interface AppStore {
   runs: Run[];
@@ -14,8 +15,8 @@ interface AppStore {
 }
 
 export const useAxiomStore = create<AppStore>((set) => ({
-  runs: [],
-  activeRunId: null,
+  runs: MOCK_RUNS,
+  activeRunId: "run_001",
   wolframMode: "local_kernel",
   isComputing: false,
   addRun: (run) =>

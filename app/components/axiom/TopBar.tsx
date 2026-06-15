@@ -3,7 +3,7 @@ import { useAxiomStore } from "@/lib/axiom/store";
 
 export function TopBar({ title, onMenu }: { title: string; onMenu?: () => void }) {
   const mode = useAxiomStore((s) => s.wolframMode);
-  const isMocked = mode === "mocked";
+  const isMocked = false;
 
   return (
     <header className="flex h-14 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-primary)] px-4 sm:px-6">
@@ -37,7 +37,7 @@ export function TopBar({ title, onMenu }: { title: string; onMenu?: () => void }
               : "border-[var(--accent)]/30 bg-[var(--accent-glow)] text-[var(--accent)]"
           }`}
         >
-          [{isMocked ? "MOCKED" : "LIVE"}]
+          [{isMocked ? "STANDBY" : "LIVE"}]
         </span>
         <span className="hidden font-mono text-[10px] text-[var(--text-secondary)] sm:inline">
           Last checked 8s ago
